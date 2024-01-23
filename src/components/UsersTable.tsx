@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { FC, useState, useEffect } from "react";
 import UserRow from "./UserRow";
 
@@ -7,6 +5,25 @@ interface UsersTableProps {
   users: User[]
 }
 
+
+const inputStyle = {
+  width: '100%',
+  fontSize: '16px',
+  padding: '10px',
+  border: '1px solid #ddd',
+  marginBottom: '5px'
+}
+
+const tableStyle = {
+  borderCollapse: 'collapse',
+  width: '100%'
+}
+
+const thStyle = {
+  border: '1px solid #cccccc',
+  textAlign: 'left',
+  padding: '10px'
+}
 
 const UsersTable: FC<UsersTableProps> = ({ users }) => {
 
@@ -48,49 +65,27 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
 
   return (
     <div
-      css={css`
-      table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-      }
-
-      td,
-      th {
-          border: 1px solid #cccccc;
-          text-align: left;
-          padding: 10px;
-      }
-
-      tr:nth-child(even) {
-          background-color: #dddddd;
-      }
-    `}
     >
       <h1>Users</h1>
       <input type="text"
         value={filter}
-        css={css`
-        width: 100%;
-        font-size: 16px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        margin-bottom: 5px;
-        `}
+        style={inputStyle}
         placeholder="Search for names.."
         title="Type in a name"
         onChange={(e) => setFilter(e.target.value)}
       />
 
-      <table>
+      <table
+        style={tableStyle}
+      >
         <thead>
-          <tr>
-            <th>No</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th colSpan={2}>Actions</th>
+          <tr >
+            <th style={thStyle}>No</th>
+            <th style={thStyle}>First Name</th>
+            <th style={thStyle}>Last Name</th>
+            <th style={thStyle}>Email</th>
+            <th style={thStyle}>Phone</th>
+            <th colSpan={2} style={thStyle}>Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -14,6 +14,12 @@ const editableFields = [
     'phone',
 ]
 
+const tdStyle = {
+    border: '1px solid #cccccc',
+    textAlign: 'left',
+    padding: '10px' 
+}
+
 const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState({ ...user });
@@ -52,7 +58,7 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
 
     return (
         <tr key={user.id}>
-            <td
+            <td style={tdStyle}
             >{user.id}</td>
             {editableFields.map((field) => (
                 <EditableTableCell
@@ -63,7 +69,7 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
                     value={editedUser[field as keyof object]}
                 />
             ))}
-            <td
+            <td style={tdStyle}
             >
                 {
                     isEditing ?
@@ -77,7 +83,7 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
                         </button>
                 }
             </td>
-            <td
+            <td style={tdStyle}
             >
                 {
                     isEditing ?
