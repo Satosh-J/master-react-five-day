@@ -1,50 +1,82 @@
-const users = [
-  {
-    "id": 18,
-    "first_name": "Cherlyn",
-    "last_name": "Kleingrub",
-    "email": "ckleingrubh@nps.gov",
-    "phone": "915-736-0167",
-  },
-  {
-    "id": 19,
-    "first_name": "Stan",
-    "last_name": "Aasaf",
-    "email": "saasafi@gnu.org",
-    "phone": "903-560-9509",
-  },
-  {
-    "id": 20,
-    "first_name": "Penelope",
-    "last_name": "Raggitt",
-    "email": "praggittj@mayoclinic.com",
-    "phone": "563-943-2235",
+// UsersTable.tsx
+
+import { FC, useState, useEffect } from "react";
+import UserRow from "./UserRow";
+
+interface UsersTableProps {
+  users: User[]
+}
+
+
+const UsersTable: FC<UsersTableProps> = ({ users }) => {
+
+  const [filter, setFilter] = useState('');
+
+  const handleDelete = (id: ID) => {
+    console.log('Delete: ', id)
   }
-]
-const UsersTable = () => {
+
+  const handleEdit = (id: ID) => {
+    console.log('Edit: ', id)
+  }
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    // Simulating asynchronous data fetching
+    const fetchData = async () => {
+      try {
+        // Simulated API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Filtering logic (simulated API response)
+        const filteredData = users.filter((user) => {
+          return Object.values(user).some((value) =>
+            value.toString().toLowerCase().includes(filter.toLowerCase())
+          );
+        });
+
+        // Update state with filtered data
+        setFilteredUsers(filteredData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    // Call fetchData when the filter or users change
+    fetchData();
+  }, [filter, users]);
+
   return (
     <div>
       <h1>Users</h1>
-      <p>This component illustrates the utilization of component props in the React</p>
-      <table>
+      <input type="text"
+        value={filter}
+        className="form-control my-2"
+        placeholder="Search for names.."
+        title="Type in a name"
+        onChange={(e) => setFilter(e.target.value)}
+      />
+
+      <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <td>No</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Email</td>
-            <td>Phone</td>
+            <th>No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th colSpan={2}>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map(item => (
-            <tr key={`${item.id}`}>
-              <td>{item.id}</td>
-              <td>{item.first_name}</td>
-              <td>{item.last_name}</td>
-              <td>{item.email}</td>
-              <td>{item.phone}</td>
-            </tr>))}
+          {filteredUsers.map((user) => (
+            <UserRow
+              key={user.id}
+              user={user}
+              onEdit={() => handleEdit(user.id)}
+              onDelete={() => handleDelete(user.id)}
+            />
+          ))}
         </tbody>
       </table>
     </div>
