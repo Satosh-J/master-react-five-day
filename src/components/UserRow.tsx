@@ -5,6 +5,7 @@ interface UserRowProps {
     user: User; // Assume UserData is the type for your user data
     onEdit: (userId: ID, updatedUser: User) => void;
     onDelete: (userId: ID) => void;
+    onRowSelect: (user: User) => void
 }
 
 const editableFields = [
@@ -14,7 +15,7 @@ const editableFields = [
     'phone',
 ]
 
-const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
+const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete, onRowSelect }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState({ ...user });
 
@@ -48,10 +49,15 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
         });
     };
 
+    const handleRowClicked = () => {
+        onRowSelect(user)
+    }
 
 
     return (
-        <tr key={user.id}>
+        <tr key={user.id}
+            onClick={handleRowClicked}
+        >
             <td
             >{user.id}</td>
             {editableFields.map((field) => (

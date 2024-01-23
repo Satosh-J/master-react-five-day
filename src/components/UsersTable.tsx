@@ -1,14 +1,19 @@
 // UsersTable.tsx
 
-import { FC, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import UserRow from "./UserRow";
-
-interface UsersTableProps {
-  users: User[]
-}
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../store/store';
 
 
-const UsersTable: FC<UsersTableProps> = ({ users }) => {
+const UsersTable = () => {
+
+  const { users }: { users: User[] } = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch()
+
+  const handleUserSelect = (user: User) => {
+    dispatch({ type: 'SELECT_USER', payload: user })
+  }
 
   const [filter, setFilter] = useState('');
 
@@ -71,6 +76,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
         <tbody>
           {filteredUsers.map((user) => (
             <UserRow
+              onRowSelect={handleUserSelect}
               key={user.id}
               user={user}
               onEdit={() => handleEdit(user.id)}
