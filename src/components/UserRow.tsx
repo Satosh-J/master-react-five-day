@@ -3,7 +3,7 @@ import EditableTableCell from "./EditableCell";
 
 interface UserRowProps {
     user: User; // Assume UserData is the type for your user data
-    onEdit: (userId: ID, updatedUser: User) => void;
+    onEdit: (updatedUser: User) => void;
     onDelete: (userId: ID) => void;
     onRowSelect: (user: User) => void
 }
@@ -22,7 +22,7 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete, onRowSelect }) => {
     const handleEdit = () => {
         if (isEditing) {
             // Save changes
-            onEdit(user.id, editedUser);
+            onEdit(editedUser);
         } else {
             // Start editing
             setIsEditing(true);
@@ -37,7 +37,10 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete, onRowSelect }) => {
 
     const handleSave = () => {
         // Save changes
-        onEdit(user.id, editedUser);
+        console.log({
+            user: editedUser
+        })
+        onEdit(editedUser);
         setIsEditing(false);
     };
 
