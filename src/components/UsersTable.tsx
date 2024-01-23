@@ -1,5 +1,5 @@
-// UsersTable.tsx
-import styles from './UsersTable.module.css';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { FC, useState, useEffect } from "react";
 import UserRow from "./UserRow";
 
@@ -47,11 +47,36 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
   }, [filter, users]);
 
   return (
-    <div>
+    <div
+      css={css`
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      td,
+      th {
+          border: 1px solid #cccccc;
+          text-align: left;
+          padding: 10px;
+      }
+
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+    `}
+    >
       <h1>Users</h1>
       <input type="text"
         value={filter}
-        className={styles.searchInput}
+        css={css`
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 5px;
+        `}
         placeholder="Search for names.."
         title="Type in a name"
         onChange={(e) => setFilter(e.target.value)}
