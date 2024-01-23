@@ -1,5 +1,5 @@
 // UsersTable.tsx
-
+import styles from './UsersTable.module.css';
 import { FC, useState, useEffect } from "react";
 import UserRow from "./UserRow";
 
@@ -51,13 +51,13 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
       <h1>Users</h1>
       <input type="text"
         value={filter}
-        className="form-control my-2"
+        className={styles.searchInput}
         placeholder="Search for names.."
         title="Type in a name"
         onChange={(e) => setFilter(e.target.value)}
       />
 
-      <table className="table table-striped table-bordered">
+      <table>
         <thead>
           <tr>
             <th>No</th>

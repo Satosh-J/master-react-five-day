@@ -17,7 +17,6 @@ const EditableTableCell: FC<UserRowProps> = ({ name, value, onChange, isEditing 
         <input
           type="text"
           name={name}
-          className="form-control"
           value={value}
           onChange={onChange}
         />

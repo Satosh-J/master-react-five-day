@@ -68,12 +68,10 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
                 {
                     isEditing ?
                         <button onClick={handleCancel}
-                            className="btn btn-secondary"
                         >
                             Cancel
                         </button> :
                         <button
-                            className="btn btn-primary"
                             onClick={handleEdit}>
                             Edit
                         </button>
@@ -84,10 +82,8 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
                 {
                     isEditing ?
                         <button onClick={handleSave}
-                            className="btn btn-primary"
                         >Save</button> :
                         <button onClick={() => onDelete(user.id)}
-                            className="btn btn-danger"
                         >Delete</button>
                 }
             </td>
