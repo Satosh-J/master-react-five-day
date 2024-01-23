@@ -2,21 +2,20 @@
 
 import { useState, useEffect, useRef } from "react";
 import UserRow from "./UserRow";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, fetchFilteredPaginatedUsers, saveUser, updateUser } from "../api/users";
 import Pagination from "./Pagination";
 import NewUserRow from "./NewUserRow";
+import { RootState } from "../store/store";
 
 
 const UsersTable = () => {
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
+  const { users, isLoading, totalCount } = useSelector((state: RootState) => state.user)
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Set the desired number of items per page
 
-  const [totalCount, setTotalCount] = useState(0)
 
 
 
@@ -28,50 +27,29 @@ const UsersTable = () => {
 
   const [filter, setFilter] = useState('');
 
-  const handleDelete = async (id: ID) => {
-    setIsLoading(true)
-    const success = await deleteUser(id)
-    if (success) {
-      const updatedUsers = users.filter(item => item.id !== id)
-      setUsers(updatedUsers)
-    }
-    setIsNew(false)
-    setIsLoading(false)
+  const handleDelete = (id: ID) => {
+    dispatch(deleteUser(id))
+
   }
 
-  const handleEdit = async (editedUser: User) => {
-    setIsLoading(true)
-    const updatedUser = await updateUser(editedUser)
-    const updatedUsers = users.map((user: User) => {
-      if (user.id === updatedUser.id) {
-        return {
-          ...user, ...updatedUser
-        }
-      } else return user
-    })
-    setUsers(updatedUsers)
-    setIsNew(false)
-    setIsLoading(false)
+  const handleEdit = (editedUser: User) => {
+    dispatch(updateUser(editedUser))
   }
 
   const prevFilterRef = useRef(filter); // useRef to store the previous filter value
 
   useEffect(() => {
     let cancel = false;
-    setIsLoading(true);
 
     // Reset currentPage to 1 when the filter changes
     if (prevFilterRef.current !== filter) {
       setCurrentPage(1);
     }
 
-    fetchFilteredPaginatedUsers(filter, currentPage, itemsPerPage).then((data) => {
-      if (!cancel) {
-        setUsers(data.users);
-        setTotalCount(data.totalCount);
-        setIsLoading(false);
-      }
-    });
+    if (!cancel)
+      dispatch(
+        fetchFilteredPaginatedUsers(filter, currentPage, itemsPerPage)
+      )
 
     // Update the ref with the current filter value after the fetch
     prevFilterRef.current = filter;
@@ -87,12 +65,9 @@ const UsersTable = () => {
   };
 
   const [isNew, setIsNew] = useState(false)
-  const handleNewUserSave = async (user: NewUserData) => {
-    setIsLoading(true)
-    const newUser = await saveUser(user)
-    setUsers([newUser, ...users])
+  const handleNewUserSave = (user: NewUserData) => {
+    dispatch(saveUser(user))
     setIsNew(false)
-    setIsLoading(false)
   }
 
 
@@ -134,7 +109,7 @@ const UsersTable = () => {
                 {isNew && <NewUserRow onCancel={() => setIsNew(false)} onSave={handleNewUserSave} />}
                 {isLoading ? <tr><td colSpan={6}>Loading...</td></tr> :
                   users.length > 0 ? (
-                    users.map((user) => (
+                    users.map((user: User) => (
                       <UserRow
                         key={user.id}
                         user={user}

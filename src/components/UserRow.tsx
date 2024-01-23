@@ -59,9 +59,13 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete, onRowSelect }) => {
 
     return (
         <tr key={user.id}
-            onClick={handleRowClicked}
+
         >
             <td
+                style={{
+                    cursor: 'pointer'
+                }}
+                onClick={handleRowClicked}
             >{user.id}</td>
             {editableFields.map((field) => (
                 <EditableTableCell
