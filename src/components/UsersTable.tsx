@@ -1,3 +1,5 @@
+// UsersTable.tsx
+
 import { FC, useState, useEffect } from "react";
 import UserRow from "./UserRow";
 
@@ -5,25 +7,6 @@ interface UsersTableProps {
   users: User[]
 }
 
-
-const inputStyle = {
-  width: '100%',
-  fontSize: '16px',
-  padding: '10px',
-  border: '1px solid #ddd',
-  marginBottom: '5px'
-}
-
-const tableStyle = {
-  borderCollapse: 'collapse',
-  width: '100%'
-}
-
-const thStyle = {
-  border: '1px solid #cccccc',
-  textAlign: 'left',
-  padding: '10px'
-}
 
 const UsersTable: FC<UsersTableProps> = ({ users }) => {
 
@@ -64,28 +47,25 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
   }, [filter, users]);
 
   return (
-    <div
-    >
+    <div>
       <h1>Users</h1>
       <input type="text"
         value={filter}
-        style={inputStyle}
+        className="form-control my-2"
         placeholder="Search for names.."
         title="Type in a name"
         onChange={(e) => setFilter(e.target.value)}
       />
 
-      <table
-        style={tableStyle}
-      >
+      <table className="table table-striped table-bordered">
         <thead>
-          <tr >
-            <th style={thStyle}>No</th>
-            <th style={thStyle}>First Name</th>
-            <th style={thStyle}>Last Name</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>Phone</th>
-            <th colSpan={2} style={thStyle}>Actions</th>
+          <tr>
+            <th>No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th colSpan={2}>Actions</th>
           </tr>
         </thead>
         <tbody>

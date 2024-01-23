@@ -14,12 +14,6 @@ const editableFields = [
     'phone',
 ]
 
-const tdStyle = {
-    border: '1px solid #cccccc',
-    textAlign: 'left',
-    padding: '10px' 
-}
-
 const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState({ ...user });
@@ -58,7 +52,7 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
 
     return (
         <tr key={user.id}>
-            <td style={tdStyle}
+            <td
             >{user.id}</td>
             {editableFields.map((field) => (
                 <EditableTableCell
@@ -69,27 +63,31 @@ const UserRow: FC<UserRowProps> = ({ user, onEdit, onDelete }) => {
                     value={editedUser[field as keyof object]}
                 />
             ))}
-            <td style={tdStyle}
+            <td
             >
                 {
                     isEditing ?
                         <button onClick={handleCancel}
+                            className="btn btn-secondary"
                         >
                             Cancel
                         </button> :
                         <button
+                            className="btn btn-primary"
                             onClick={handleEdit}>
                             Edit
                         </button>
                 }
             </td>
-            <td style={tdStyle}
+            <td
             >
                 {
                     isEditing ?
                         <button onClick={handleSave}
+                            className="btn btn-primary"
                         >Save</button> :
                         <button onClick={() => onDelete(user.id)}
+                            className="btn btn-danger"
                         >Delete</button>
                 }
             </td>

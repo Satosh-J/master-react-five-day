@@ -7,23 +7,17 @@ interface UserRowProps {
   isEditing: boolean
 }
 
-const tdStyle = {
-  border: '1px solid #cccccc',
-  textAlign: 'left',
-  padding: '10px'
-}
-
 const EditableTableCell: FC<UserRowProps> = ({ name, value, onChange, isEditing = false }) => {
 
 
   return (
-    <td
-      style={tdStyle}
+    <td className={isEditing ? 'editing' : ''}
     >
       {isEditing ? (
         <input
           type="text"
           name={name}
+          className="form-control"
           value={value}
           onChange={onChange}
         />
