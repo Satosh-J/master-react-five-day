@@ -1,6 +1,6 @@
 # React Tutorial Book
 
-Welcome to the official repository for the Mastering React in 5 Days for Experienced Developers ! This repository contains the source code and additional resources for each chapter of the book.
+Welcome to the official repository for the __Mastering React in 5 Days for Experienced Developers__ ! This repository contains the source code and additional resources for each chapter of the book.
 
 ## How to Use This Repository
 
